@@ -1,14 +1,18 @@
 export default function Home() {
+    const clientName = 'Shmual';
+    const clientId = '345';
+    const url = `https://clownfish-app-atszh.ondigitalocean.app/protected?clientId=${clientId}&clientName=${clientName}`;
+
     return (
         <main>
             <iframe
-                src="https://clownfish-app-atszh.ondigitalocean.app/protected?clientId=123&clientName=Amos"
-                style={{
-                    width: '100%',
-                    height: '100vh',
-                    border: 'none',
-                    backgroundColor: 'gray',
-                }}
+                src={url}
+                // style={{
+                //     width: '100%',
+                //     height: '100vh',
+                //     border: 'none',
+                //     backgroundColor: 'gray',
+                // }}
             />
         </main>
     );
