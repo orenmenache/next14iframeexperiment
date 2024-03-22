@@ -25,9 +25,9 @@ export default async function Page({ searchParams }: PageProps) {
         return (
             <div>
                 {selection.length > 0 ? (
-                    <pre>{JSON.stringify(selection)}</pre>
+                    <h1>{JSON.stringify(selection)}</h1>
                 ) : (
-                    <pre>{`No client with id: ${clientId}`}</pre>
+                    <h1>{`No client with id: ${clientId}`}</h1>
                 )}
             </div>
         );
