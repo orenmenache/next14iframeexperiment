@@ -11,6 +11,8 @@ type PageProps = {
 };
 
 export default async function Page({ searchParams }: PageProps) {
+    console.log('You got to search');
+
     const clientId = searchParams.clientId;
     const clientName = searchParams.clientName;
     if (!clientId || !clientName) return <h1>No clientId or no clientName</h1>;
