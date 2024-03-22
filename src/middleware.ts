@@ -8,7 +8,7 @@ export function middleware(req: NextRequest) {
     console.log('Current URL:', url.href);
     console.log('Referrer URL:', referrer);
 
-    console.log('Request headers:', JSON.stringify(req.headers, null, 2));
+    console.log('Request headers:', JSON.stringify(req, null, 2));
 
     // This example just returns the original request (no modifications)
     return NextResponse.next();

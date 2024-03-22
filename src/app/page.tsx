@@ -1,7 +1,7 @@
 export default function Home() {
     return (
         <main>
-            <h1>Home</h1>
+            <iframe src="https://clownfish-app-atszh.ondigitalocean.app/another" />
         </main>
     );
 }
