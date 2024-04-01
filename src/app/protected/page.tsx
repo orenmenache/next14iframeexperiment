@@ -10,6 +10,8 @@ type PageProps = {
     searchParams: SearchParams;
 };
 
+// test
+
 export default async function Page({ searchParams }: PageProps) {
     console.log('You got to search');
 
