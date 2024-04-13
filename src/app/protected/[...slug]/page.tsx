@@ -1,4 +1,5 @@
 import { MYSQL_DB } from "@/server/classes/MYSQL_DB";
+import FullAcademy from "@/server/Components/FullAcademy";
 import { runFunctionWithRetry } from "@/server/Functions/RunFunctionWithRetry";
 import axios from "axios";
 import { headers } from "next/headers";
@@ -7,28 +8,35 @@ import React from "react";
 type SearchParams = {
    clientId: string;
    clientName: string;
+   client: string;
 };
 
 type PageProps = {
-   searchParams: SearchParams;
+   params: { slug: string[] };
 };
 
 // test
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ params }: PageProps) {
    console.log("You got to search");
 
-   const clientId = searchParams.clientId;
-   const clientName = searchParams.clientName;
-
+   const client = params.slug[0];
+   const clientId = params.slug[1];
+   const clientName = params.slug[2];
+   if (!client) return <h1>No client</h1>;
    if (!clientId || !clientName) return <h1>No clientId or no clientName</h1>;
+   let clientVideos: string[] = [];
    if (await clientExists(clientId, clientName)) {
-      getClientVideos();
+      clientVideos = await getClientVideos();
    }
+   console.log(clientVideos);
    return (
-      <div>
-         <h2>client id:{clientId}</h2>
-         <h2>client name:{clientName}</h2>
+      <div style={{ height: "500px", width: "500px" }}>
+         <FullAcademy
+            params={{
+               videos: clientVideos,
+            }}
+         />
       </div>
    );
 }
@@ -41,16 +49,9 @@ async function getClientVideos() {
          projectId: "77qeGi0Eu9xPv5EcNe8w",
       });
    }, 5);
-   const embbedString =
-      '<script>!function(e,t,i){if(void 0===e._dyntube_v1_init){e._dyntube_v1_init=!0;var a=t.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://embed.dyntube.com/v1.0/dyntube.js",t.getElementsByTagName("head")[0].appendChild(a)}}(window,document);</script><div data-dyntube-key="$CHANNELKEY$"></div>';
-   const videosEmbbedString = [];
-   for (const video of videos) {
-      videosEmbbedString.push(
-         embbedString.replace("$CHANNELKEY$", video.channelKey)
-      );
-   }
+
    //console.log(videosEmbbedString);
-   return videosEmbbedString;
+   return videos.map((video) => video.channelKey);
 }
 
 async function clientExists(clientId: string, clientName: string) {
@@ -86,7 +87,7 @@ interface validatedUser {
    display_name: string;
 }
 
-interface Video {
+export interface Video {
    id: string;
    duration: number;
    projectId: string;
