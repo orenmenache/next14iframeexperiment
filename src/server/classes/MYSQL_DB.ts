@@ -10,7 +10,7 @@ export class MYSQL_DB {
         password: process.env.DB_PWD,
         host: process.env.DB_HOST,
         port: 25060,
-        database: 'economicnews',
+        database: 'backoffice',
         connectionLimit: 10,
         multipleStatements: true,
     } as PoolOptions;
