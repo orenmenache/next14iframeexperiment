@@ -5,15 +5,21 @@ import { use, useEffect, useRef, useState } from 'react';
 import Video from './Video';
 import { MinifiedEpisodes } from '../Functions/organizeEpisodesData';
 import { Button } from 'flowbite-react';
+import { HiOutlineArrowRight, HiOutlineArrowLeft } from 'react-icons/hi';
 
 type VideoViewPrpos = {
     episodes: MinifiedEpisodes[];
     activeChapter: string;
+    episodeIndex: number;
+    setEpisodeIndex: (index: number) => void;
 };
 
-export default function VideoView({ episodes, activeChapter }: VideoViewPrpos) {
-    const [episodeIndex, setEpisodeIndex] = useState(0);
-
+export default function VideoView({
+    episodes,
+    activeChapter,
+    episodeIndex,
+    setEpisodeIndex,
+}: VideoViewPrpos) {
     const onClickIncrementEpisodeIndex = () => {
         if (episodeIndex < episodes.length - 1) {
             setEpisodeIndex(episodeIndex + 1);
@@ -28,7 +34,7 @@ export default function VideoView({ episodes, activeChapter }: VideoViewPrpos) {
 
     return (
         <>
-            <section className="video-frame">
+            <section>
                 <h1>{episodeIndex}</h1>
                 <div id="player">
                     <Video
@@ -39,39 +45,71 @@ export default function VideoView({ episodes, activeChapter }: VideoViewPrpos) {
                 </div>
 
                 <div
-                    className="episode-library"
+                    className="video-episode-library-container-version1"
                     style={{
                         display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
+                        flexDirection: 'column',
                     }}
                 >
-                    <Button
-                        onClick={onClickDecrementEpisodeIndex}
-                        disabled={episodeIndex === 0}
-                    >
-                        Prev
-                    </Button>
-                    <p
-                        className="font-normal text-gray-700 dark:text-gray-400"
-                        key={episodes[episodeIndex].episode}
+                    <div
+                        className="button-container"
                         style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            padding: '0 1rem',
-                            margin: 'auto',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            padding: '5px',
                         }}
                     >
-                        {episodes[episodeIndex].episode}
-                    </p>
-                    <Button
-                        onClick={onClickIncrementEpisodeIndex}
-                        disabled={episodeIndex === episodes.length - 1}
-                    >
-                        Next
-                    </Button>
+                        <Button
+                            color="blue"
+                            size="sm"
+                            style={{
+                                width: '48%',
+                                textAlign: 'center',
+                            }}
+                            onClick={onClickDecrementEpisodeIndex}
+                            disabled={episodeIndex === 0}
+                        >
+                            <HiOutlineArrowLeft className="ml-2 h-5 w-5" />
+                            <span style={{ color: 'transparent' }}>...</span>
+                            Prev
+                        </Button>
+                        <Button
+                            color="blue"
+                            size="sm"
+                            style={{ width: '48%' }}
+                            onClick={onClickIncrementEpisodeIndex}
+                            disabled={episodeIndex === episodes.length - 1}
+                        >
+                            Next
+                            <HiOutlineArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                    </div>
+
+                    <div className="video-title-container">
+                        <p
+                            className="font-normal text-gray-700 dark:text-gray-400"
+                            key={episodes[episodeIndex].episode}
+                            style={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                padding: '0 1rem',
+                                margin: 'auto',
+                            }}
+                        >
+                            {episodes[episodeIndex].episode}
+                        </p>
+                    </div>
                 </div>
+
+                <div
+                    className="video-episode-library-container-version2"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                ></div>
 
                 {/* <div className="video-library">
                     {episodes.slice(1, 4).map((episode, index) => {

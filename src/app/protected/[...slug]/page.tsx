@@ -1,11 +1,8 @@
-import { Academia } from '@/app/page';
 import { MYSQL_DB } from '@/server/classes/MYSQL_DB';
-import AcademyApp from '@/server/Components/AcademyApp';
-import FullAcademy from '@/server/Components/FullAcademy';
+import AcademyApp__CC from '@/server/Components/AcademyApp';
 import { MinifiedChapters } from '@/server/Functions/organizeEpisodesData';
 import { runFunctionWithRetry } from '@/server/Functions/RunFunctionWithRetry';
 import axios from 'axios';
-import { headers } from 'next/headers';
 import React from 'react';
 
 type SearchParams = {
@@ -101,28 +98,21 @@ export default async function Page({ params }: PageProps) {
     const clientName = params.slug[2];
     if (!client) return <h1>No client</h1>;
     if (!clientId || !clientName) return <h1>No clientId or no clientName</h1>;
+
     let clientVideos: string[] = [];
     if (await clientExists(clientId, clientName)) {
         clientVideos = await getClientVideos();
     }
     console.log(clientVideos);
-    return (
-        <div
-            style={{
-                height: '500px',
-                width: '500px' /*, background: 'green'*/,
-            }}
-        >
-            <AcademyApp videoData={dummy} />
-        </div>
-    );
+
+    return <AcademyApp__CC videoData={dummy} />;
 }
 
 async function getClientVideos() {
-    const db = new MYSQL_DB();
-    db.createPool();
+    const DB = new MYSQL_DB();
+    DB.createPool();
     const videos: Video[] = await runFunctionWithRetry(() => {
-        return db.SELECT('backoffice.videos', {
+        return DB.SELECT('backoffice.videos', {
             projectId: '77qeGi0Eu9xPv5EcNe8w',
         });
     }, 5);
