@@ -1,181 +1,77 @@
-import { MYSQL_DB } from '@/server/classes/MYSQL_DB';
-import AcademyApp__CC from '@/server/Components/AcademyApp';
-import { MinifiedChapters } from '@/server/Functions/organizeEpisodesData';
-import { runFunctionWithRetry } from '@/server/Functions/RunFunctionWithRetry';
-import axios from 'axios';
-import React from 'react';
+import { MYSQL_DB } from "@/server/classes/MYSQL_DB";
+import AcademyApp__CC from "@/server/Components/AcademyApp";
+import getAcademiaData from "@/server/Functions/getAcademiaData";
+import getClientData from "@/server/Functions/getClientData";
+import { MinifiedChapters } from "@/server/Functions/organizeEpisodesData";
+import orgenizeAcademiaData from "@/server/Functions/orgenizeAcademiaData";
+import { runFunctionWithRetry } from "@/server/Functions/RunFunctionWithRetry";
+import { Client, OrgenizedEpisodesData } from "@/server/types/dbSchemes";
+import axios from "axios";
+import React from "react";
 
 type SearchParams = {
-    clientId: string;
-    clientName: string;
-    client: string;
+   clientId: string;
+   clientName: string;
+   client: string;
 };
 
 type PageProps = {
-    params: { slug: string[] };
+   params: { slug: string[] };
 };
 
-// test
-const dummy: MinifiedChapters[] = [
-    {
-        episodes: [
-            {
-                episode:
-                    '1. Forex Double Top And Double Bottom Formation Patterns',
-                key: 'sivLZRsA7UejUo4gRZN1EQ',
-            },
-            {
-                episode: '2. Learn Forex Head And Shoulders Pattern',
-                key: 'Jth83q6cfUCO7zLYIVkrxw',
-            },
-            {
-                episode: '3. Forex Inverse Head And Shoulders Pattern',
-                key: 'CUo2wHYlUu8DFsuxsHdA',
-            },
-            {
-                episode: '4. Forex Bull Flag Formation Patterns',
-                key: 'U7J0rcQsSkuxqcQsoRTaqg',
-            },
-            {
-                episode: '5. Forex Bear Flag Patterns',
-                key: '5kkIIaNiNkmblMFk4QPiw',
-            },
-            {
-                episode: '6. Forex Bullish And Bearish Pennant Formation',
-                key: 'YbIO6ZKx20m6Hu4P8897JA',
-            },
-            {
-                episode: '7. Forex Falling Wedge Pattern',
-                key: 'DFE6UGTFkkCbZTBvmAqZbg',
-            },
-            {
-                episode:
-                    '8. Forex Ascending And Descending Triangle Formations',
-                key: '3DN70JImUqjiAI9ZEcg',
-            },
-            {
-                episode: '9. Forex Symmetrical Triangle Pattern',
-                key: 'HOnbqTLDzECraLHSIm9qw',
-            },
-        ],
-        chapter: 'Chart Formation Patterns',
-        levelId: 1,
-    },
-    {
-        chapter: 'Forex Indicators',
-        levelId: 1,
-        episodes: [
-            {
-                episode:
-                    '10. Forex Double Top And Double Bottom Formation Patterns',
-                key: 'R0sEV05rEIkRaBfV1zw',
-            },
-            {
-                episode: '20. Learn Forex Head And Shoulders Pattern',
-                key: 'YbrGhfGET0maoLe0MIaUQ',
-            },
-            {
-                episode: '30. Forex Inverse Head And Shoulders Pattern',
-                key: '0UF3YCY0UOhdktn4v3sxQ',
-            },
-            {
-                episode: '40. Forex Bull Flag Formation Patterns',
-                key: 'v1nTG6qMxUWkCDAMtkwpmA',
-            },
-            {
-                episode: '50. Forex Bear Flag Patterns',
-                key: 'QdCM4mdkGkSeAaOxiL02Jg',
-            },
-        ],
-    },
-];
-
 export default async function Page({ params }: PageProps) {
-    console.log('You got to search');
+   const clientName = decodeURIComponent(params.slug[0]);
+   const userId = params.slug[1];
+   const userName = params.slug[2];
+   if (!clientName) return <h1>No client</h1>;
+   if (!userId || !userName) return <h1>No user id or no user name</h1>;
+   console.log("clientName", clientName);
+   console.log("userId", userId);
+   console.log("userName", userName);
+   if (!(await userExists(userId, userName))) {
+      return <h1>UnAuthorised</h1>;
+   }
+   const clientData: Client[] = (
+      await getClientData(clientName)
+   )[0] as Client[];
+   const academiaData = (await getAcademiaData(
+      clientName
+   )) as OrgenizedEpisodesData[];
 
-    const client = params.slug[0];
-    const clientId = params.slug[1];
-    const clientName = params.slug[2];
-    if (!client) return <h1>No client</h1>;
-    if (!clientId || !clientName) return <h1>No clientId or no clientName</h1>;
+   const academiaDataReady: MinifiedChapters[] =
+      orgenizeAcademiaData(academiaData);
 
-    let clientVideos: string[] = [];
-    if (await clientExists(clientId, clientName)) {
-        clientVideos = await getClientVideos();
-    }
-    console.log(clientVideos);
-
-    return <AcademyApp__CC videoData={dummy} />;
+   return <AcademyApp__CC videoData={academiaDataReady} />;
 }
 
-async function getClientVideos() {
-    const DB = new MYSQL_DB();
-    DB.createPool();
-    const videos: Video[] = await runFunctionWithRetry(() => {
-        return DB.SELECT('backoffice.videos', {
-            projectId: '77qeGi0Eu9xPv5EcNe8w',
-        });
-    }, 5);
-
-    //console.log(videosEmbbedString);
-    return videos.map((video) => video.channelKey);
-}
-
-async function clientExists(clientId: string, clientName: string) {
-    try {
-        const response = await axios.post(
-            'https://traderslab.education/api/v1',
-            {
-                user_id: Number(clientId),
-                user_name: clientName,
+async function userExists(clientId: string, clientName: string) {
+   try {
+      const response = await axios.post(
+         "https://traderslab.education/api/v1",
+         {
+            user_id: Number(clientId),
+            user_name: clientName,
+         },
+         {
+            headers: {
+               authorization: "GcraeyIJAz8svdo",
+               "Content-Type": "application/json",
             },
-            {
-                headers: {
-                    authorization: 'GcraeyIJAz8svdo',
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        return true;
-        console.log(response.data);
-    } catch (e) {
-        console.log(e);
-        return false;
-    }
+         }
+      );
+      return true;
+   } catch (e) {
+      console.log(e);
+      return false;
+   }
 }
 interface validatedUser {
-    ID: string;
-    user_login: string;
-    user_nicename: string;
-    user_email: string;
-    user_url: string;
-    user_registered: string;
-    user_status: string;
-    display_name: string;
-}
-
-export interface Video {
-    id: string;
-    duration: number;
-    projectId: string;
-    accountKey: string;
-    region: any;
-    captions: any;
-    video_key: string;
-    channelKey: string;
-    privateLink: string;
-    hlsLink: string;
-    planType: any;
-    mp4Url: any;
-    mp4Urls: any;
-    formats: any;
-    hlsUrl: any;
-    hlsUrlWeb: any;
-    title: string;
-    description: any;
-    options: any;
-    tags: any;
-    version: any;
-    status: any;
-    created: any;
+   ID: string;
+   user_login: string;
+   user_nicename: string;
+   user_email: string;
+   user_url: string;
+   user_registered: string;
+   user_status: string;
+   display_name: string;
 }

@@ -1,4 +1,4 @@
-type langCode =
+export type langCode =
    | "EN"
    | "IT"
    | "DE"
@@ -180,4 +180,14 @@ export interface DyntubeVideo {
    version: number;
    status: number;
    created: Date;
+}
+
+export interface OrgenizedEpisodesData {
+   chapter_name: string;
+   chapter_order: number;
+   client_name: string;
+   EN: string;
+   episode_key: string;
+   episode_name: string;
+   episode_order: number;
 }
