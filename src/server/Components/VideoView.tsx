@@ -1,7 +1,5 @@
 "use client";
 
-import { Episode } from "@/app/page";
-import { use, useEffect, useRef, useState } from "react";
 import Video from "./Video";
 import { MinifiedEpisodes } from "../Functions/organizeEpisodesData";
 import { Button } from "flowbite-react";

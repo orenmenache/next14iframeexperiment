@@ -1,10 +1,8 @@
-import { MYSQL_DB } from "@/server/classes/MYSQL_DB";
 import AcademyApp__CC from "@/server/Components/AcademyApp";
 import getAcademiaData from "@/server/Functions/getAcademiaData";
 import getClientData from "@/server/Functions/getClientData";
 import { MinifiedChapters } from "@/server/Functions/organizeEpisodesData";
 import orgenizeAcademiaData from "@/server/Functions/orgenizeAcademiaData";
-import { runFunctionWithRetry } from "@/server/Functions/RunFunctionWithRetry";
 import { Client, OrgenizedEpisodesData } from "@/server/types/dbSchemes";
 import axios from "axios";
 import React from "react";
