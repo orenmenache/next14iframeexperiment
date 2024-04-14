@@ -36,11 +36,13 @@
 .drawer {
    padding: 15px 10px 15px 15px;
    width: 220px;
+   height: max(35vh, 200px);
    display: flex;
    flex-direction: column;
    gap: 5px;
    background-color: var(--drawer-bg);
    border-radius: 0 15px 15px 0;
+   overflow-y: auto;
 }
 
 button {
@@ -84,17 +86,16 @@ button {
    flex-direction: column;
    justify-content: flex-end;
    height: max(50vh, 400px);
+   width: min(90vw, 300px);
 }
 
 .video-library {
    display: flex;
    align-items: center;
-   height: 450px;
+   justify-items: center;
 }
 
-.player {
-   height: 60%;
-}
-.video-player {
-   height: 60%;
+.video-library button {
+   width: 70px;
+   height: 30px;
 }

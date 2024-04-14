@@ -1,15 +1,18 @@
 "use client";
 
 import { Episode } from "@/app/page";
-import { useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import Video from "./Video";
+import { MinifiedEpisodes } from "../Functions/organizeEpisodesData";
 
 type ParamType = {
-   episodes: Episode[];
+   episodes: MinifiedEpisodes[];
+   activeChapter: string;
 };
 
 export default function VideoView(params: ParamType) {
    const episodes = params.episodes;
+   const activeChapter = params.activeChapter;
    const [episodeIndex, setEpisodeIndex] = useState(1);
 
    return (
@@ -20,6 +23,7 @@ export default function VideoView(params: ParamType) {
                <Video
                   videoIndex={episodeIndex}
                   videoKey={episodes[episodeIndex].key}
+                  activeChapter={activeChapter}
                />
             </div>
 
@@ -32,7 +36,7 @@ export default function VideoView(params: ParamType) {
                            key={episode.key}
                            onClick={() => setEpisodeIndex(index)}
                         >
-                           <p key={episode.name}>{episode.name}</p>
+                           <p key={episode.episode}>{episode.episode}</p>
                         </button>
                      </div>
                   );

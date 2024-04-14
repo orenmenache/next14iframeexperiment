@@ -15,10 +15,12 @@
     "axios": "^1.6.8",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.8",
-    "mysql2": "^3.9.2",
+    "mysql2": "^3.9.4",
+    "net": "^1.0.2",
     "next": "14.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "tls": "^0.0.1",
     "typescript": "5.4.3"
   },
   "devDependencies": {

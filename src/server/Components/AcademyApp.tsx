@@ -4,9 +4,11 @@ import { Academia } from "@/app/page";
 import Drawer from "./Drawer";
 import { useState } from "react";
 import VideoView from "./VideoView";
+import getEpisodesData from "../Functions/getEpisodeData";
+import { MinifiedChapters } from "../Functions/organizeEpisodesData";
 
 type PropsType = {
-   videoData: Academia[];
+   videoData: MinifiedChapters[];
 };
 
 export default function AcademyApp(props: PropsType) {
@@ -16,15 +18,15 @@ export default function AcademyApp(props: PropsType) {
    let episodes = videoData.filter(
       (academia) => academia.chapter === activeChapter
    )[0].episodes;
-
    return (
       <>
+         {console.log(videoData)}
          <div className="frame">
             <Drawer
                onChangeActiveChapter={setActiveChapter}
                chapters={cahpters}
             />
-            <VideoView episodes={episodes} />
+            <VideoView episodes={episodes} activeChapter={activeChapter} />
          </div>
       </>
    );

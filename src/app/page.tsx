@@ -3,6 +3,14 @@ import Drawer from "@/server/Components/Drawer";
 import FullAcademy from "@/server/Components/FullAcademy";
 import Video from "@/server/Components/Video";
 import VideoView from "@/server/Components/VideoView";
+import getClientData from "@/server/Functions/getClientData";
+import getClientVideos from "@/server/Functions/getClientVideos";
+import getEpisodesData from "@/server/Functions/getEpisodeData";
+import organizeEpisodesData, {
+   MinifiedEpisodes,
+} from "@/server/Functions/organizeEpisodesData";
+import { Client, DyntubeVideo } from "@/server/types/dbSchemes";
+import fs from "fs";
 
 import { useEffect } from "react";
 export interface Episode {
@@ -13,7 +21,7 @@ export interface Academia {
    episodes: Episode[];
    chapter: string;
 }
-export default function Home() {
+export default async function Home() {
    const clientName = "Shmual";
    const clientId = "345";
    const url = `https://clownfish-app-atszh.ondigitalocean.app/protected?clientId=${clientId}&clientName=${clientName}`;
@@ -60,6 +68,7 @@ export default function Home() {
          chapter: "Chart Formation Patterns",
       },
       {
+         chapter: "Forex Indicators",
          episodes: [
             {
                name: "10. Forex Double Top And Double Bottom Formation Patterns",
@@ -82,29 +91,46 @@ export default function Home() {
                key: "QdCM4mdkGkSeAaOxiL02Jg",
             },
          ],
-         chapter: "Forex Indicators",
       },
    ];
+   const clientRawData: any = await getClientData("Traders Lab");
+   const clientData: Client = await clientRawData[0][0];
+   console.log(clientData);
+   const clientVideos: DyntubeVideo[] = (
+      await getClientVideos(clientData.dyntube_project_id)
+   )[0] as DyntubeVideo[];
+   //console.log(clientVideos);
+   const episodes: MinifiedEpisodes[] = clientVideos.map((video) => {
+      let regex = /^\d+\.\s/;
+      let title = video.title.replace(regex, "");
+      return { episode: title, key: video.channelKey };
+   });
+   const dyntubeEpisodes = Array.from(episodes);
+   let episodesData: any = [];
+   while (episodes.length > 0) {
+      const tempEpisodesData = (
+         await getEpisodesData(
+            episodes.splice(0, 10).map((episode) => episode.episode),
+            clientData.lang
+         )
+      )[0] as any[];
+      episodesData = [...episodesData, ...tempEpisodesData];
+   }
+   console.log(dyntubeEpisodes);
+   const data = organizeEpisodesData(episodesData, dyntubeEpisodes);
 
+   fs.writeFile("data.json", JSON.stringify(data), (err) => {
+      if (err) {
+         console.error("Error writing data to file:", err);
+      } else {
+         console.log("Data written to file successfully!");
+      }
+   });
+
+   console.log(data);
    return (
       <main>
-         <AcademyApp videoData={dummy} />
-
-         {/*<FullAcademy
-            params={{
-               videos: [
-                  "sivLZRsA7UejUo4gRZN1EQ",
-                  "Jth83q6cfUCO7zLYIVkrxw",
-                  "CUo2wHYlUu8DFsuxsHdA",
-                  "U7J0rcQsSkuxqcQsoRTaqg",
-                  "5kkIIaNiNkmblMFk4QPiw",
-                  "YbIO6ZKx20m6Hu4P8897JA",
-                  "DFE6UGTFkkCbZTBvmAqZbg",
-                  "3DN70JImUqjiAI9ZEcg",
-                  "HOnbqTLDzECraLHSIm9qw",
-               ],
-            }}
-         />*/}
+         <AcademyApp videoData={data} />
       </main>
    );
 }
