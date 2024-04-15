@@ -47,7 +47,29 @@ export default function VideoView({
                   activeChapter={activeChapter}
                />
             </div>
-
+            <div
+               className="video-title-container"
+               style={{
+                  padding: "0 5px",
+               }}
+            >
+               <Button
+                  color="blue"
+                  key={episodes[episodeIndex].episode}
+                  style={{
+                     overflow: "hidden",
+                     textOverflow: "ellipsis",
+                     whiteSpace: "nowrap",
+                     padding: "0 1rem",
+                     margin: "auto",
+                     width: "100%",
+                     cursor: "default",
+                     border: "none",
+                  }}
+               >
+                  {episodes[episodeIndex].episode}
+               </Button>
+            </div>
             <div
                className="video-episode-library-container-version1"
                style={{
@@ -89,30 +111,6 @@ export default function VideoView({
                      <HiOutlineArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                </div>
-
-               <div
-                  className="video-title-container"
-                  style={{
-                     padding: "0 5px",
-                  }}
-               >
-                  <Button
-                     color="blue"
-                     key={episodes[episodeIndex].episode}
-                     style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        padding: "0 1rem",
-                        margin: "auto",
-                        width: "100%",
-                        cursor: "default",
-                        border: "none",
-                     }}
-                  >
-                     {episodes[episodeIndex].episode}
-                  </Button>
-               </div>
             </div>
 
             <div
@@ -122,24 +120,6 @@ export default function VideoView({
                   flexDirection: "column",
                }}
             ></div>
-
-            {/* <div className="video-library">
-                    {episodes.slice(1, 4).map((episode, index) => {
-                        return (
-                            <div key={index}>
-                                <button
-                                    className=""
-                                    key={episode.key}
-                                    onClick={() => setEpisodeIndex(index)}
-                                >
-                                    <p key={episode.episode}>
-                                        {episode.episode}
-                                    </p>
-                                </button>
-                            </div>
-                        );
-                    })}
-                </div> */}
          </section>
       </>
    );

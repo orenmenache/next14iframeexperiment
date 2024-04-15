@@ -34,6 +34,20 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
                margin: "auto",
             }}
          >
+            <a
+               style={{
+                  width: "100%",
+               }}
+               href="#login"
+            >
+               <Button>Login</Button>
+            </a>
+            <VideoView
+               episodes={episodes}
+               activeChapter={activeChapter}
+               episodeIndex={episodeIndex}
+               setEpisodeIndex={setEpisodeIndex}
+            />
             <div
                className="chapter-list"
                style={{
@@ -43,6 +57,8 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
                   // alignItems: 'center',
                   margin: "5px",
                   gap: "5px",
+                  height: "150px",
+                  overflowY: "auto",
                }}
             >
                {videoData.map((chapterData: MinifiedChapters) => (
@@ -55,12 +71,6 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
                   </Button>
                ))}
             </div>
-            <VideoView
-               episodes={episodes}
-               activeChapter={activeChapter}
-               episodeIndex={episodeIndex}
-               setEpisodeIndex={setEpisodeIndex}
-            />
          </div>
       </>
    );
