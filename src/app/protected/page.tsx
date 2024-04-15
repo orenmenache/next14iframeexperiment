@@ -1,4 +1,5 @@
 import { MYSQL_DB } from "@/server/classes/MYSQL_DB";
+import LoginTrigger from "@/server/Components/envokeLogin";
 import { runFunctionWithRetry } from "@/server/Functions/RunFunctionWithRetry";
 import axios from "axios";
 import { Button } from "flowbite-react";
@@ -28,14 +29,7 @@ export default async function Page({ searchParams }: PageProps) {
    return (
       <div>
          <h2>client id:{clientId}</h2>
-         <a
-            style={{
-               width: "100%",
-            }}
-            href="https://traderslab.education/our-courses/#login"
-         >
-            <Button>Login</Button>
-         </a>
+         <LoginTrigger targetOrigin={""} />
          <h2>client name:{clientName}</h2>
       </div>
    );
