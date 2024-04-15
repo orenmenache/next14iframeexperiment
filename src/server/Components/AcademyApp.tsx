@@ -4,6 +4,7 @@ import { useState } from "react";
 import VideoView from "./VideoView";
 import { MinifiedChapters } from "../Functions/organizeEpisodesData";
 import { Button } from "flowbite-react";
+import LoginTrigger from "./envokeLogin";
 
 type AcademyAppProps = {
    videoData: MinifiedChapters[];
@@ -34,14 +35,9 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
                margin: "auto",
             }}
          >
-            <a
-               style={{
-                  width: "100%",
-               }}
-               href="https://traderslab.education/our-courses/#login"
-            >
-               <Button>Login</Button>
-            </a>
+            <LoginTrigger
+               targetOrigin={"https://traderslab.education/our-courses/"}
+            />
             <VideoView
                episodes={episodes}
                activeChapter={activeChapter}
