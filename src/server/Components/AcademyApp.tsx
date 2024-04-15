@@ -38,7 +38,7 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
                style={{
                   width: "100%",
                }}
-               href="#login"
+               href="https://traderslab.education/our-courses/#login"
             >
                <Button>Login</Button>
             </a>
