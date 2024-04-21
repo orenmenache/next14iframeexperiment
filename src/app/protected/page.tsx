@@ -29,9 +29,7 @@ export default async function Page({ searchParams }: PageProps) {
    return (
       <div>
          <h2>client id:{clientId}</h2>
-         <LoginTrigger
-            targetOrigin={"https://traderslab.education/our-courses/"}
-         />
+
          <h2>client name:{clientName}</h2>
       </div>
    );
