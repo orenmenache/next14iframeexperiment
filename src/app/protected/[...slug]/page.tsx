@@ -23,10 +23,8 @@ export default async function Page({ params }: PageProps) {
    const userName = params.slug[2];
    if (!clientName) return <h1>No client</h1>;
    if (!userId || !userName) return <h1>No user id or no user name</h1>;
-   console.log("clientName", clientName);
-   console.log("userId", userId);
-   console.log("userName", userName);
-   if (!(await userExists(userId, userName))) {
+   const user = await userExists(userId, userName);
+   if (!user) {
       return <h1>UnAuthorised</h1>;
    }
    const clientData: Client[] = (
@@ -36,13 +34,20 @@ export default async function Page({ params }: PageProps) {
       clientName
    )) as OrgenizedEpisodesData[];
 
-   const academiaDataReady: MinifiedChapters[] =
+   let academiaDataReady: MinifiedChapters[] =
       orgenizeAcademiaData(academiaData);
+   console.log(user);
+   if (user === "guest") {
+      academiaDataReady = sanitizeAcademiaData(academiaDataReady);
+   }
 
    return <AcademyApp__CC videoData={academiaDataReady} />;
 }
 
-async function userExists(clientId: string, clientName: string) {
+async function userExists(
+   clientId: string,
+   clientName: string
+): Promise<"user" | "guest" | false> {
    try {
       const response = await axios.post(
          "https://traderslab.education/api/v1",
@@ -57,7 +62,7 @@ async function userExists(clientId: string, clientName: string) {
             },
          }
       );
-      return true;
+      return response.data.message;
    } catch (e) {
       console.log(e);
       return false;
@@ -72,4 +77,13 @@ interface validatedUser {
    user_registered: string;
    user_status: string;
    display_name: string;
+}
+
+function sanitizeAcademiaData(academiaData: MinifiedChapters[]) {
+   for (let i = 0; i < academiaData.length; i++) {
+      for (let j = 2; j < academiaData[i].episodes.length; j++) {
+         academiaData[i].episodes[j].key = "";
+      }
+   }
+   return academiaData;
 }

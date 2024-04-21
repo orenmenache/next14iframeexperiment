@@ -4,6 +4,8 @@ import Video from "./Video";
 import { MinifiedEpisodes } from "../Functions/organizeEpisodesData";
 import { Button } from "flowbite-react";
 import { HiOutlineArrowRight, HiOutlineArrowLeft } from "react-icons/hi";
+import GuestModal from "./GuestModal";
+import { useState } from "react";
 
 type VideoViewPrpos = {
    episodes: MinifiedEpisodes[];
@@ -18,9 +20,15 @@ export default function VideoView({
    episodeIndex,
    setEpisodeIndex,
 }: VideoViewPrpos) {
+   const [showModal, setShowModal] = useState(false);
+
    const onClickIncrementEpisodeIndex = () => {
       if (episodeIndex < episodes.length - 1) {
          setEpisodeIndex(episodeIndex + 1);
+         if (episodes[episodeIndex].key === "") {
+            setEpisodeIndex(episodeIndex - 1);
+            setShowModal(true);
+         }
       }
    };
 
@@ -33,6 +41,7 @@ export default function VideoView({
    return (
       <>
          <section>
+            <GuestModal showModal={showModal} setShowModal={setShowModal} />
             <div
                id="player"
                style={{
