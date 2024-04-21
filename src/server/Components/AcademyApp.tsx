@@ -16,6 +16,7 @@ export default function AcademyApp__CC({
    client_url,
 }: AcademyAppProps) {
    // const chapters = videoData.map((academia) => academia.chapter);
+   console.log(client_url);
    const [activeChapter, setActiveChapter] = useState(videoData[0].chapter);
    const [episodes, setEpisodes] = useState(videoData[0].episodes);
    const [episodeIndex, setEpisodeIndex] = useState(0);
