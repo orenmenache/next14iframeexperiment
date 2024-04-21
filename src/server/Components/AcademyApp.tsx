@@ -36,9 +36,7 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
             }}
          >
             <LoginTrigger
-               targetOrigin={
-                  "http://127.0.0.1:5500/index.html" /*"https://traderslab.education/our-courses/"*/
-               }
+               targetOrigin={"https://traderslab.education/our-courses/"}
             />
             <VideoView
                episodes={episodes}
