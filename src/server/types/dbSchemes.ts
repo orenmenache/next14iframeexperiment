@@ -139,6 +139,8 @@ export interface Client {
    client_name: string;
    lang: langCode;
    style_scheme: string;
+   login_url: string;
+   register_url: string;
 }
 
 export interface EpisodeData {

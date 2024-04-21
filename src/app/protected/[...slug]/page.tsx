@@ -41,7 +41,14 @@ export default async function Page({ params }: PageProps) {
       academiaDataReady = sanitizeAcademiaData(academiaDataReady);
    }
 
-   return <AcademyApp__CC videoData={academiaDataReady} />;
+   const client_url = {
+      login_url: clientData[0].login_url,
+      register_url: clientData[0].register_url,
+   };
+
+   return (
+      <AcademyApp__CC videoData={academiaDataReady} client_url={client_url} />
+   );
 }
 
 async function userExists(

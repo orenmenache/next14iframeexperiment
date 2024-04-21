@@ -8,9 +8,13 @@ import LoginTrigger from "./envokeLogin";
 
 type AcademyAppProps = {
    videoData: MinifiedChapters[];
+   client_url: { login_url: string; register_url: string };
 };
 
-export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
+export default function AcademyApp__CC({
+   videoData,
+   client_url,
+}: AcademyAppProps) {
    // const chapters = videoData.map((academia) => academia.chapter);
    const [activeChapter, setActiveChapter] = useState(videoData[0].chapter);
    const [episodes, setEpisodes] = useState(videoData[0].episodes);
@@ -37,6 +41,7 @@ export default function AcademyApp__CC({ videoData }: AcademyAppProps) {
          >
             <LoginTrigger
                targetOrigin={"https://traderslab.education/our-courses/"}
+               client_url={client_url.login_url}
             />
             <VideoView
                episodes={episodes}

@@ -4,15 +4,17 @@ import React from "react";
 
 type ParamType = {
    targetOrigin: string;
+   client_url: string;
 };
 
-export default function LoginTrigger({ targetOrigin }: ParamType) {
+export default function LoginTrigger({ targetOrigin, client_url }: ParamType) {
    const sendMessage = () => {
+      console.log(client_url);
       // Make sure the parent URL (targetOrigin) is correct
       window.parent.postMessage(
          {
             message: "openLogin",
-            url: "http://127.0.0.1:5500/index.html#login",
+            url: client_url,
          },
          targetOrigin
       );
