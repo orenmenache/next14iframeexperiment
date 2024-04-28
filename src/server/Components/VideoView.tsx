@@ -12,6 +12,7 @@ type VideoViewPrpos = {
    activeChapter: string;
    episodeIndex: number;
    setEpisodeIndex: (index: number) => void;
+   url: string;
 };
 
 export default function VideoView({
@@ -19,14 +20,15 @@ export default function VideoView({
    activeChapter,
    episodeIndex,
    setEpisodeIndex,
+   url,
 }: VideoViewPrpos) {
    const [showModal, setShowModal] = useState(false);
 
    const onClickIncrementEpisodeIndex = () => {
       if (episodeIndex < episodes.length - 1) {
          setEpisodeIndex(episodeIndex + 1);
-         if (episodes[episodeIndex].key === "") {
-            setEpisodeIndex(episodeIndex - 1);
+         if (episodes[episodeIndex + 1].key === "") {
+            setEpisodeIndex(episodeIndex);
             setShowModal(true);
          }
       }
@@ -41,7 +43,11 @@ export default function VideoView({
    return (
       <>
          <section>
-            <GuestModal showModal={showModal} setShowModal={setShowModal} />
+            <GuestModal
+               showModal={showModal}
+               setShowModal={setShowModal}
+               url={url}
+            />
             <div
                id="player"
                style={{

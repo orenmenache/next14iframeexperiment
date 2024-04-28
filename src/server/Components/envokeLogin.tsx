@@ -4,21 +4,65 @@ import React from "react";
 
 type ParamType = {
    targetOrigin: string;
-   client_url: string;
+   url: string;
+   buttonText: string;
+   setShowModal: Function;
 };
 
-export default function LoginTrigger({ targetOrigin, client_url }: ParamType) {
+export default function LoginTrigger({
+   targetOrigin,
+   url,
+   buttonText,
+   setShowModal,
+}: ParamType) {
    const sendMessage = () => {
-      console.log(client_url);
+      setShowModal(false);
+      console.log(url);
       // Make sure the parent URL (targetOrigin) is correct
+      document.querySelector;
       window.parent.postMessage(
          {
             message: "openLogin",
-            url: client_url,
+            url: url,
          },
          targetOrigin
       );
    };
 
-   return <Button onClick={sendMessage}>Open Parent Login</Button>;
+   return <Button onClick={sendMessage}>{buttonText}</Button>;
 }
+
+/**
+ *  ?>
+    <style>
+        @media (max-width: 430px) 
+        .responsive-iframe {
+         width: 100vw;
+     }
+ }
+</style>
+<script>
+window.addEventListener(
+"message",
+function (event) {
+if(event.origin !== "https://clownfish-app-atszh.ondigitalocean.app"){
+ console.log("rejected: " + event.origin);
+ console.log(event.data);
+ return;
+}
+if (event.data.message === "openLogin") {
+             console.log(event.data);
+             var loginButton = document.querySelector("a.ld-login");
+             if(!loginButton){
+                 console.log("could not find login button");
+             }
+             loginButton.click();
+           //window.location.replace(event.data.url);
+           //window.location.reload();
+ }
+},
+false
+);
+</script>
+<?php
+ */

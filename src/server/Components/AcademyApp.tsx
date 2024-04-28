@@ -35,20 +35,17 @@ export default function AcademyApp__CC({
          <div
             style={{
                display: "flex",
-               flexDirection: "column",
-               width: "600px",
+               flexDirection: "row-reverse",
+               width: "800px",
                margin: "auto",
             }}
          >
-            <LoginTrigger
-               targetOrigin={"https://traderslab.education/our-courses/"}
-               client_url={client_url.login_url}
-            />
             <VideoView
                episodes={episodes}
                activeChapter={activeChapter}
                episodeIndex={episodeIndex}
                setEpisodeIndex={setEpisodeIndex}
+               url={client_url.login_url}
             />
             <div
                className="chapter-list"
@@ -59,7 +56,7 @@ export default function AcademyApp__CC({
                   // alignItems: 'center',
                   margin: "5px",
                   gap: "5px",
-                  height: "150px",
+                  height: "452.1666px",
                   overflowY: "auto",
                }}
             >

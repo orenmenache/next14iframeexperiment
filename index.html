@@ -623,7 +623,7 @@
                if (event.data.message === "openLogin") {
                   console.log("Login triggered");
                   console.log(event.data.url);
-                  window.location.replace(event.data.url);
+                  window.location.hash = "login";
                   window.location.reload();
                }
             },

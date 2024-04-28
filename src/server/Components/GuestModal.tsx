@@ -2,13 +2,19 @@
 
 import { Button, Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
+import LoginTrigger from "./envokeLogin";
 
 type PropsParam = {
    showModal: boolean;
    setShowModal: Function;
+   url: string;
 };
 
-export default function GuestModal({ showModal, setShowModal }: PropsParam) {
+export default function GuestModal({
+   showModal,
+   setShowModal,
+   url,
+}: PropsParam) {
    return (
       <>
          <Modal show={showModal} onClose={() => setShowModal(false)}>
@@ -24,12 +30,19 @@ export default function GuestModal({ showModal, setShowModal }: PropsParam) {
                   </p>
                </div>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="flex justify-center items-center">
                <div className="flex justify-around">
-                  <div>
-                     <Button onClick={() => setShowModal(false)}>Log In</Button>
+                  <div style={{ marginRight: "15px" }}>
+                     <LoginTrigger
+                        targetOrigin={
+                           "http://127.0.0.1:5500/index.html" /*"https://traderslab.education/our-courses/"*/
+                        }
+                        url={url}
+                        buttonText="Log In"
+                        setShowModal={setShowModal}
+                     />
                   </div>
-                  <div>
+                  <div style={{ marginLeft: "15px" }}>
                      <Button color="gray" onClick={() => setShowModal(false)}>
                         Register
                      </Button>
