@@ -34,9 +34,7 @@ export default function GuestModal({
                <div className="flex justify-around">
                   <div style={{ marginRight: "15px" }}>
                      <LoginTrigger
-                        targetOrigin={
-                           "https://traderslab.education/our-courses/"
-                        }
+                        targetOrigin={"https://traderslab.education"}
                         url={url}
                         buttonText="Log In"
                         setShowModal={setShowModal}
