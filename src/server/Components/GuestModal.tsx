@@ -35,7 +35,7 @@ export default function GuestModal({
                   <div style={{ marginRight: "15px" }}>
                      <LoginTrigger
                         targetOrigin={
-                           "http://127.0.0.1:5500/index.html" /*"https://traderslab.education/our-courses/"*/
+                           "https://traderslab.education/our-courses/"
                         }
                         url={url}
                         buttonText="Log In"
