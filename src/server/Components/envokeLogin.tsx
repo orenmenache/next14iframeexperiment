@@ -20,7 +20,7 @@ export default function LoginTrigger({
       console.log(url);
       console.log(targetOrigin);
       // Make sure the parent URL (targetOrigin) is correct
-      window.postMessage(
+      window.parent.postMessage(
          {
             message: "openLogin",
             url: url,
