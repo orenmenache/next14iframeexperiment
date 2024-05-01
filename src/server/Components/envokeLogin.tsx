@@ -18,9 +18,9 @@ export default function LoginTrigger({
    const sendMessage = () => {
       setShowModal(false);
       console.log(url);
+      console.log(targetOrigin);
       // Make sure the parent URL (targetOrigin) is correct
-      document.querySelector;
-      window.parent.postMessage(
+      window.postMessage(
          {
             message: "openLogin",
             url: url,

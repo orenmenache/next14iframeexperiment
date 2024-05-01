@@ -40,6 +40,12 @@ export default function AcademyApp__CC({
                margin: "auto",
             }}
          >
+            <LoginTrigger
+               targetOrigin={"https://traderslab.education/our-courses/"}
+               url={client_url.login_url}
+               buttonText="Log In"
+               setShowModal={() => {}}
+            />
             <VideoView
                episodes={episodes}
                activeChapter={activeChapter}
