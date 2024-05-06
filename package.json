@@ -12,6 +12,7 @@
         "@types/node": "20.11.30",
         "@types/react": "18.2.67",
         "@types/react-dom": "18.2.22",
+        "autoprefixer": "^10.4.19",
         "axios": "^1.6.8",
         "flowbite": "^2.3.0",
         "flowbite-react": "^0.7.8",
@@ -22,8 +23,7 @@
         "react-dom": "18.2.0",
         "styled-components": "^5.3.11",
         "tls": "^0.0.1",
-        "typescript": "5.4.3",
-        "autoprefixer": "^10.4.19"
+        "typescript": "5.4.3"
     },
     "devDependencies": {
         "@types/styled-components": "^5.1.34",
