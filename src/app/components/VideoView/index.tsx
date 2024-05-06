@@ -81,7 +81,7 @@ export default function VideoView({
             </VideoTitleContainer>
             <NextPrevButtonContainer>
                 <Button
-                    color="blue"
+                    color="gray"
                     size="sm"
                     style={{
                         width: '48%',
@@ -95,7 +95,7 @@ export default function VideoView({
                     Prev
                 </Button>
                 <Button
-                    color="blue"
+                    color="gray"
                     size="sm"
                     style={{ width: '48%' }}
                     onClick={onClickIncrementEpisodeIndex}

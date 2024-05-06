@@ -58,7 +58,7 @@ export default function AcademyApp__CC({
                 /> */}
             <ChapterListContainer>
                 <Button
-                    color="blue"
+                    color="gray"
                     size="sm"
                     style={{ width: '100%', maxWidth: '350px' }}
                     onClick={onClickLoadPrevChapters}
@@ -96,7 +96,7 @@ export default function AcademyApp__CC({
                     ))}
 
                 <Button
-                    color="blue"
+                    color="gray"
                     size="sm"
                     style={{ width: '100%', maxWidth: '350px' }}
                     onClick={onClickLoadNextChapters}
