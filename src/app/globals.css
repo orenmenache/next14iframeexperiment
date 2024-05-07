@@ -3,70 +3,70 @@
 @tailwind utilities;
 
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
 }
 
 :root {
-    --ui-direction: rtl;
-    --button-color: #4b5563;
-    --drawer-bg: #1f2937;
-    --button-border-color: #4b5563;
-    --button-shadow-color: #9ca3af;
-    --button-focus-ccolor: #6b7280;
+   --ui-direction: rtl;
+   --button-color: #4b5563;
+   --drawer-bg: #1f2937;
+   --button-border-color: #4b5563;
+   --button-shadow-color: #9ca3af;
+   --button-focus-ccolor: #6b7280;
 }
 
 .drawer-container {
-    color: var(--button-shadow-color);
-    display: flex;
-    height: max(35vh, 300px);
-    width: 280px;
-    position: fixed;
-    left: -224px;
-    align-items: center;
-    transition: left 0.7s ease;
-    z-index: 2;
+   color: var(--button-shadow-color);
+   display: flex;
+   height: max(35vh, 300px);
+   width: 280px;
+   position: fixed;
+   left: -224px;
+   align-items: center;
+   transition: left 0.7s ease;
+   z-index: 2;
 }
 
 .drawer-container.open {
-    left: -10px;
+   left: -10px;
 }
 
 .drawer {
-    padding: 15px 10px 15px 15px;
-    width: 220px;
-    height: max(35vh, 200px);
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background-color: var(--drawer-bg);
-    border-radius: 0 15px 15px 0;
-    overflow-y: auto;
+   padding: 15px 10px 15px 15px;
+   width: 220px;
+   height: max(35vh, 200px);
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   background-color: var(--drawer-bg);
+   border-radius: 0 15px 15px 0;
+   overflow-y: auto;
 }
 
 button {
-    text-align: left;
-    background-color: var(--button-color);
-    border: var(--button-border-color) solid 1px;
-    border-radius: 5px;
-    padding-left: 3px;
-    box-shadow: 0px 0px 4px 1px var(--button-shadow-color);
+   text-align: left;
+   background-color: var(--button-color);
+   border: var(--button-border-color) solid 1px;
+   border-radius: 5px;
+   padding-left: 3px;
+   box-shadow: 0px 0px 4px 1px var(--button-shadow-color);
 }
 
 .drawer-icon:hover {
-    cursor: pointer;
+   cursor: pointer;
 }
 
 .toggle-drawer {
-    background-color: var(--drawer-bg);
-    border-radius: 0 5px 5px 0;
-    height: 40px;
-    display: flex;
+   background-color: var(--drawer-bg);
+   border-radius: 0 5px 5px 0;
+   height: 40px;
+   display: flex;
 }
 
 .open-mark {
-    align-self: center;
-    width: 30px;
-    background-color: var(--drawer-bg);
+   align-self: center;
+   width: 30px;
+   background-color: var(--drawer-bg);
 }
